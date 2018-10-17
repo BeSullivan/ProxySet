@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const osmosis = require('osmosis');
 const chalk = require('chalk');
 
