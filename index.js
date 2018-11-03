@@ -6,7 +6,7 @@ function getProxies (url) {
         let results = [];
         osmosis
         .get(url)
-       .find('tr[@class="cells"]')   
+       .find('tr[@class="cells"]')
         .set({
             IP: 'td[2]',
             Port: 'td[3]',
@@ -14,7 +14,6 @@ function getProxies (url) {
         })
         .data(item => {
             results.push(item);
-            console.log(item);
         })
         .done(() => resolve(results));
     });
@@ -26,9 +25,9 @@ const start = async () => {
     let allProxies = [];
     urls.forEach(url => console.log(url));
     urls.forEach(url => {
-            getProxies(url).then(data => data.forEach(item => console.log(chalk.green(item))) )
+            getProxies(url).then(data => data.forEach(item => console.log(item) ))
         });
-
+    
 }
 
 start();
