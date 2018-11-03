@@ -1,5 +1,13 @@
 const osmosis = require('osmosis');
 const chalk = require('chalk');
+const proxy = require('proxy-agent');
+
+function setProxy (proxy) {
+    
+    AWS.config.update({
+        httpOptions : { agent : proxy('')}
+    })
+}
 
 function getProxies (url) {
     return new Promise ((resolve ,reject) => {
@@ -25,8 +33,17 @@ const start = async () => {
     let allProxies = [];
     urls.forEach(url => console.log(url));
     urls.forEach(url => {
-            getProxies(url).then(data => data.forEach(item => console.log(item) ))
+            getProxies(url).then(data => data.forEach(item => allProxies.push(item) ))
         });
+
+    allProxies.forEach(proxy => {
+        if(proxy.Type != "anonymous") {
+            setProxy(proxy).then(valid => {
+                if(valid) 
+                    console.log("Connected ! Proxy : %s",proxy);
+            });
+        }
+    })
     
 }
 
